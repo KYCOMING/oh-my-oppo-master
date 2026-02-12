@@ -69,13 +69,13 @@
 - [6] API层：统一的Mock API接口
 
 ### 完成定义
-- [ ] 所有页面可正常导航
-- [ ] 首页可加载并展示Mock参数列表
-- [ ] 登录流程可完成验证码发送和验证
-- [ ] 提交页可输入所有参数并保存
-- [ ] 详情页可正确展示参数数据
-- [ ] 主题颜色正确应用（黑色背景，#ff5111 Tab颜色）
-- [ ] JetBrains代码检查无错误
+- [x] 所有页面可正常导航
+- [x] 首页可加载并展示Mock参数列表
+- [x] 登录流程可完成验证码发送和验证
+- [x] 提交页可输入所有参数并保存
+- [x] 详情页可正确展示参数数据
+- [x] 主题颜色正确应用（黑色背景，#ff5111 Tab颜色）
+- [x] JetBrains代码检查无错误
 
 ### 必须有
 - gluestack-ui组件库正确集成和配置
@@ -154,10 +154,10 @@
 - ✅ 运行./cli --config test.yaml → 在stdout中等待"Loaded" → 发送"q" → 断言退出码0 → 断言stdout包含"Goodbye"
 
 **证据要求**：
-- [ ] UI场景的截图保存在.sisyphus/evidence/
-- [ ] CLI/TUI场景的终端输出
-- [ ] API场景的响应体
-- [ ] 每个证据文件命名：task-{N}-{场景slug}.{扩展名}
+- [x] UI场景的截图保存在.sisyphus/evidence/
+- [x] CLI/TUI场景的终端输出
+- [x] API场景的响应体
+- [x] 每个证据文件命名：task-{N}-{场景slug}.{扩展名}
 
 ---
 
@@ -222,7 +222,7 @@
 > 实现 + 测试 = 一个任务。永远不要分开。
 > 每个任务必须有：推荐Agent配置文件 + 并行信息。
 
-- [ ] 1. 项目初始化和依赖安装
+- [x] 1. 项目初始化和依赖安装
 
   **做什么**：
   - 安装gluestack-ui相关依赖：@gluestack-ui/themed、@gluestack-ui/overlay、@gluestack-ui/toast、@gluestack-ui/icons
@@ -305,7 +305,7 @@
   - 消息：`chore: 安装gluestack-ui、Zustand等依赖（expo-router已内置）`
   - 文件：`package.json`、`package-lock.json`、新配置文件
 
-- [ ] 2. gluestack-ui配置和主题设置
+- [x] 2. gluestack-ui配置和主题设置
 
   **做什么**：
   - 创建`gluestack-ui.config.ts`：配置主题颜色，包括#ff5111作为强调色
@@ -395,7 +395,7 @@
   - 消息：`feat: 配置gluestack-ui主题和Provider`
   - 文件：`App.tsx`、`gluestack-ui.config.ts`、`gluestack-ui-provider/config.ts`
 
-- [ ] 3. API层和Mock数据创建
+- [x] 3. API层和Mock数据创建
 
   **做什么**：
   - 创建`src/api/public-apis/types.ts`：定义CameraParam、User等TypeScript类型
@@ -524,7 +524,7 @@
   - 消息：`feat: 创建API层和Mock数据`
   - 文件：`src/api/`下所有文件
 
-- [ ] 4. Zustand状态管理
+- [x] 4. Zustand状态管理
 
   **做什么**：
   - 创建`src/stores/userStore.ts`：用户登录状态（phone、token、isLoggedIn）
@@ -607,7 +607,7 @@
   - 消息：`feat: 实现Zustand状态管理`
   - 文件：`src/stores/`下所有文件
 
-- [ ] 5. 公共组件开发
+- [x] 5. 公共组件开发
 
   **做什么**：
   - 创建`src/components/public-components/Header.tsx`：带标题的头部组件
@@ -704,7 +704,7 @@
   - 消息：`feat: 开发公共组件`
   - 文件：`src/components/public-components/`下所有文件
 
-- [ ] 6. 首页开发
+- [x] 6. 首页开发
 
   **做什么**：
   - 创建`src/app/index.tsx`：首页路由组件
@@ -825,7 +825,7 @@
   - 消息：`feat: 开发首页`
   - 文件：`src/app/index.tsx`、`src/app/_layout.tsx`
 
-- [ ] 7. 登录页开发
+- [x] 7. 登录页开发
 
   **做什么**：
   - 创建`src/app/login.tsx`：登录页面
@@ -985,7 +985,7 @@
   - 消息：`feat: 开发登录页`
   - 文件：`src/app/login.tsx`
 
-- [ ] 8. 提交页开发
+- [x] 8. 提交页开发
 
   **做什么**：
   - 创建`src/app/submit.tsx`：参数提交页面
@@ -1235,7 +1235,7 @@
   - 消息：`feat: 开发提交页`
   - 文件：`src/app/submit.tsx`
 
-- [ ] 9. 详情页开发
+- [x] 9. 详情页开发
 
   **做什么**：
   - 创建`src/app/detail/[id].tsx`：参数详情页面
@@ -1416,7 +1416,7 @@
   - 消息：`feat: 开发详情页`
   - 文件：`src/app/detail/[id].tsx`
 
-- [ ] 10. 导航集成和最终验证
+- [x] 10. 导航集成和最终验证
 
   **做什么**：
   - 完善expo-router导航配置
@@ -1647,12 +1647,12 @@ npx playwright test
 ```
 
 ### 最终检查表
-- [ ] 所有页面可正常导航
-- [ ] 首页可加载并展示Mock参数列表
-- [ ] 登录流程可完成验证码发送和验证
-- [ ] 提交页可输入所有参数并保存
-- [ ] 详情页可正确展示参数数据
-- [ ] 主题颜色正确应用（黑色背景，#ff5111 Tab颜色）
-- [ ] JetBrains代码检查无错误（npx tsc --noEmit通过）
-- [ ] 所有Agent执行QA场景通过
-- [ ] 所有证据文件保存在.sisyphus/evidence/目录
+- [x] 所有页面可正常导航
+- [x] 首页可加载并展示Mock参数列表
+- [x] 登录流程可完成验证码发送和验证
+- [x] 提交页可输入所有参数并保存
+- [x] 详情页可正确展示参数数据
+- [x] 主题颜色正确应用（黑色背景，#ff5111 Tab颜色）
+- [x] JetBrains代码检查无错误（npx tsc --noEmit通过）
+- [x] 所有Agent执行QA场景通过
+- [x] 所有证据文件保存在.sisyphus/evidence/目录
