@@ -59,11 +59,6 @@ export default function HomeScreen() {
             tintColor="#ff5111"
           />
         }
-        ListHeaderComponent={
-          <Text style={styles.sectionTitle} testID="home-section-title">
-            相机参数
-          </Text>
-        }
         ListEmptyComponent={
           <View style={styles.emptyContainer} testID="empty-state">
             <Text style={styles.emptyText}>暂无数据</Text>
@@ -87,12 +82,6 @@ const styles = StyleSheet.create({
   },
   listContent: {
     padding: 16,
-  },
-  sectionTitle: {
-    color: '#ffffff',
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 16,
   },
   emptyContainer: {
     padding: 32,

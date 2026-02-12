@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Platform } from 'react-native';
 
 interface HeaderProps {
   title: string;
@@ -9,33 +9,39 @@ interface HeaderProps {
 
 export function Header({ title, showBack = false, onBack }: HeaderProps) {
   return (
-    <View style={styles.header} testID="header">
-      <View style={styles.headerContent}>
-        {showBack && (
+    <SafeAreaView style={styles.safeArea} testID="header">
+      <View style={styles.header}>
+        <View style={styles.headerContent}>
+          {showBack && (
+            <Text
+              style={styles.backText}
+              onPress={onBack}
+              testID="header-back"
+            >
+              ←
+            </Text>
+          )}
           <Text
-            style={styles.backText}
-            onPress={onBack}
-            testID="header-back"
+            style={styles.title}
+            testID="header-title"
           >
-            ←
+            {title}
           </Text>
-        )}
-        <Text
-          style={styles.title}
-          testID="header-title"
-        >
-          {title}
-        </Text>
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    backgroundColor: '#000000',
+    paddingTop: Platform.OS === 'android' ? 24 : 0,
+  },
   header: {
     paddingHorizontal: 16,
-    paddingVertical: 12,
-    backgroundColor: '#000000',
+    paddingBottom: 12,
+    paddingTop: 8,
     borderBottomWidth: 1,
     borderBottomColor: '#262626',
   },
