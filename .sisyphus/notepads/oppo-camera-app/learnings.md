@@ -1,0 +1,4 @@
+- 2026-02-12: Fixed TypeScript error TP-001 by removing deprecated vars import in gluestack-ui.config.ts and adding a minimal, explicit light/dark config.
+- Expo-router: added a global type declaration for expo-router to satisfy TS2307 during type-check.
+- Updated tsconfig.json to include all *.d.ts files to ensure ambient declarations are picked up by TypeScript.
+- Next steps: Run npx tsc --noEmit again and, if errors persist, investigate missing UI module declarations or adjust type paths.
