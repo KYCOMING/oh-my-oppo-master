@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, ActivityIndicator, StyleSheet, RefreshControl } from 'react-native';
+import { View, Text, FlatList, ActivityIndicator, StyleSheet, RefreshControl, Alert } from 'react-native';
 import { useParamsStore } from '@/stores/paramsStore';
 import { getParamsList } from '@/api/page-apis/home-api';
+import { cameraParamDAO } from '@/dao/camera-param-dao';
 import { ParamCard, Header } from '@/components/public-components';
 
 export default function HomePage() {
   const params = useParamsStore((state) => state.params);
   const loading = useParamsStore((state) => state.loading);
   const setParams = useParamsStore((state) => state.setParams);
+  const removeParam = useParamsStore((state) => state.removeParam);
   const [refreshing, setRefreshing] = useState(false);
 
   const fetchParams = async () => {
@@ -32,8 +34,31 @@ export default function HomePage() {
     fetchParams();
   };
 
+  const handleDelete = (id: string) => {
+    Alert.alert(
+      '确认删除',
+      '确定要删除这条数据吗？',
+      [
+        { text: '取消', style: 'cancel' },
+        {
+          text: '删除',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await cameraParamDAO.delete(id);
+              removeParam(id);
+            } catch (error) {
+              console.error('Failed to delete:', error);
+              Alert.alert('错误', '删除失败');
+            }
+          },
+        },
+      ]
+    );
+  };
+
   const renderItem = ({ item }: { item: any }) => (
-    <ParamCard param={item} />
+    <ParamCard param={item} onLongPress={handleDelete} />
   );
 
   const keyExtractor = (item: any) => item.id;

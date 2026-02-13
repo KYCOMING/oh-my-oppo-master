@@ -7,6 +7,7 @@ interface ParamsState {
   loading: boolean;
   setParams: (params: CameraParam[]) => void;
   addParam: (param: CameraParam) => void;
+  removeParam: (id: string) => void;
   getParam: (id: string) => CameraParam | undefined;
   loadFromDatabase: () => Promise<void>;
 }
@@ -19,6 +20,10 @@ export const useParamsStore = create<ParamsState>((set, get) => ({
 
   addParam: (param: CameraParam) => set((state) => ({
     params: [param, ...state.params]
+  })),
+
+  removeParam: (id: string) => set((state) => ({
+    params: state.params.filter((p) => p.id !== id)
   })),
 
   getParam: (id: string) => {

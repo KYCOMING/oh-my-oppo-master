@@ -5,9 +5,10 @@ import { CameraParam } from '@/api/public-apis/types';
 
 interface ParamCardProps {
   param: Pick<CameraParam, 'id' | 'title' | 'thumbnail'>;
+  onLongPress?: (id: string) => void;
 }
 
-export function ParamCard({ param }: ParamCardProps) {
+export function ParamCard({ param, onLongPress }: ParamCardProps) {
   const router = useRouter();
 
   const handlePress = () => {
@@ -17,9 +18,14 @@ export function ParamCard({ param }: ParamCardProps) {
     });
   };
 
+  const handleLongPress = () => {
+    onLongPress?.(param.id);
+  };
+
   return (
     <Pressable
       onPress={handlePress}
+      onLongPress={handleLongPress}
       testID={`param-card-${param.id}`}
       style={styles.card}
     >
