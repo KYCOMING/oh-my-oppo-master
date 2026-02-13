@@ -3,8 +3,16 @@ import { View, Text, ScrollView, StyleSheet, TextInput, Alert, KeyboardAvoidingV
 import { useRouter } from 'expo-router';
 import { useParamsStore } from '@/stores/paramsStore';
 import { submitParam } from '@/api/page-apis/submit-api';
-import { Header, CameraParamInput, SubmitButton, ImagePickerComponent } from '@/components/public-components';
+import { Header, CameraParamSlider, CameraParamPicker, SubmitButton, ImagePickerComponent } from '@/components/public-components';
 import { copyImagesToDocuments } from '@/utils/image-storage';
+import {
+  ISO_OPTIONS,
+  SHUTTER_SPEED_OPTIONS,
+  APERTURE_OPTIONS,
+  WHITE_BALANCE_OPTIONS,
+  FOCUS_OPTIONS,
+  EXPOSURE_OPTIONS,
+} from '@/utils/camera-options';
 
 export default function SubmitPage() {
   const router = useRouter();
@@ -15,12 +23,12 @@ export default function SubmitPage() {
   const [description, setDescription] = useState('');
   const [images, setImages] = useState<string[]>([]);
   const [cameraSettings, setCameraSettings] = useState({
-    iso: '',
-    shutterSpeed: '',
-    aperture: '',
-    whiteBalance: '',
-    focus: '',
-    exposure: '',
+    iso: ISO_OPTIONS[3].value,
+    shutterSpeed: SHUTTER_SPEED_OPTIONS[7].value,
+    aperture: APERTURE_OPTIONS[3].value,
+    whiteBalance: WHITE_BALANCE_OPTIONS[0].value,
+    focus: FOCUS_OPTIONS[1].value,
+    exposure: EXPOSURE_OPTIONS[30].value,
   });
 
   const handleSettingChange = (key: string, value: string) => {
@@ -129,52 +137,52 @@ export default function SubmitPage() {
           {/* Camera Settings */}
           <Text style={styles.sectionTitle}>相机参数</Text>
           
-          <CameraParamInput
+          <CameraParamSlider
             label="ISO（感光度）"
             value={cameraSettings.iso}
+            options={ISO_OPTIONS}
             onChange={(value) => handleSettingChange('iso', value)}
-            placeholder="如：400"
-            testID="iso-input"
+            testID="iso-slider"
           />
           
-          <CameraParamInput
+          <CameraParamSlider
             label="快门速度"
             value={cameraSettings.shutterSpeed}
+            options={SHUTTER_SPEED_OPTIONS}
             onChange={(value) => handleSettingChange('shutterSpeed', value)}
-            placeholder="如：1/60s"
-            testID="shutter-input"
+            testID="shutter-slider"
           />
           
-          <CameraParamInput
+          <CameraParamSlider
             label="光圈"
             value={cameraSettings.aperture}
+            options={APERTURE_OPTIONS}
             onChange={(value) => handleSettingChange('aperture', value)}
-            placeholder="如：f/1.8"
-            testID="aperture-input"
+            testID="aperture-slider"
           />
           
-          <CameraParamInput
+          <CameraParamPicker
             label="白平衡"
             value={cameraSettings.whiteBalance}
+            options={WHITE_BALANCE_OPTIONS}
             onChange={(value) => handleSettingChange('whiteBalance', value)}
-            placeholder="如：Auto"
-            testID="wb-input"
+            testID="wb-picker"
           />
           
-          <CameraParamInput
+          <CameraParamPicker
             label="对焦"
             value={cameraSettings.focus}
+            options={FOCUS_OPTIONS}
             onChange={(value) => handleSettingChange('focus', value)}
-            placeholder="如：AF-C"
-            testID="focus-input"
+            testID="focus-picker"
           />
           
-          <CameraParamInput
+          <CameraParamSlider
             label="曝光补偿"
             value={cameraSettings.exposure}
+            options={EXPOSURE_OPTIONS}
             onChange={(value) => handleSettingChange('exposure', value)}
-            placeholder="如：+0.3EV"
-            testID="exposure-input"
+            testID="exposure-slider"
           />
 
           {/* Submit Button */}
