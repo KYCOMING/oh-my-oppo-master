@@ -80,7 +80,7 @@ export default function SubmitScreen() {
     >
       <Header title="提交参数" />
       
-      <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
         <View style={styles.form}>
           {/* Title */}
           <View style={styles.fieldContainer}>
@@ -207,8 +207,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000000',
   },
-  scrollContent: {
+  scrollView: {
     flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
   },
   form: {
     padding: 16,
