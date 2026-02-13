@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, View, StyleSheet, Text } from 'react-native';
-import { Header } from '../public-components';
+import { Header } from '@/components/public-components';
 
 interface PersonInfo {
   name: string;

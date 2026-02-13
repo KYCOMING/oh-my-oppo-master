@@ -21,6 +21,9 @@ npx expo export --platform android # 导出 Android 安装包
 # 代码质量
 npm run lint        # ESLint 检查
 npx tsc --noEmit    # TypeScript 类型检查
+
+# 测试（本项目暂无测试框架）
+# 如需添加测试，推荐: npm install jest @testing-library/react-native
 ```
 
 ---
@@ -50,17 +53,23 @@ src/
 
 ## 代码规范
 
-### 导入顺序
-```
-react → react-native → 外部库 → 项目内部
-```
+### 导入规范（必须使用 @ 别名）
 ```typescript
-// 正确
+// 正确 - 使用 @ 别名
 import React, { useState } from 'react';
 import { View, Text } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useParamsStore } from '../src/stores/paramsStore';
-import { Header } from '../src/components/public-components';
+import { useParamsStore } from '@/stores/paramsStore';
+import { Header } from '@/components/public-components';
+
+// 错误 - 禁止使用相对路径
+import { Header } from '../public-components';
+import { Header } from '../../components/public-components';
+```
+
+### 导入顺序
+```
+react → react-native → 外部库 → @别名导入
 ```
 
 ### 命名规范
@@ -123,7 +132,7 @@ const styles = StyleSheet.create({
 ### 示例
 ```typescript
 // app/index.tsx（路由组件）
-import HomePage from '../src/components/page-components/HomePage';
+import HomePage from '@/components/page-components/HomePage';
 export default function HomeScreen() { return <HomePage />; }
 
 // src/components/page-components/HomePage.tsx（页面组件）
@@ -154,6 +163,7 @@ export const useParamsStore = create<ParamsState>((set) => ({
 3. 使用主题外的颜色
 4. `console.log` — 用 `console.error` 记录错误
 5. react-native SafeAreaView — 用 react-native-safe-area-context
+6. 相对路径导入 — 必须使用 `@` 别名
 
 ---
 
@@ -176,3 +186,7 @@ npm run lint       # ESLint 检查
 ### API 层
 - Mock 数据：`src/api/mock/`
 - API 函数：基于 Promise + try/catch 错误处理
+
+### 路径别名配置
+- TypeScript: `tsconfig.json` 中 `paths: { "@/*": ["./src/*"] }`
+- Babel: `babel.config.js` 中 `module-resolver` 插件配置

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocalSearchParams } from 'expo-router';
-import DetailPage from '../../src/components/page-components/DetailPage';
+import DetailPage from '@/components/page-components/DetailPage';
 
 export default function DetailScreen() {
   const searchParams = useLocalSearchParams();

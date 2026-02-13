@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
-import { CameraParam } from '../../api/public-apis/types';
+import { CameraParam } from '@/api/public-apis/types';
 
 interface ParamCardProps {
   param: Pick<CameraParam, 'id' | 'title' | 'thumbnail'>;

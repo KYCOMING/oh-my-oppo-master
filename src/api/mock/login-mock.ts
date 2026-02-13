@@ -1,4 +1,4 @@
-import { User } from '../public-apis/types';
+import { User } from '@/api/public-apis/types';
 
 export const mockSendCode = (phone: string): Promise<void> =>
   new Promise((resolve) => {

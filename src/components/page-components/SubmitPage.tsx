@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, TextInput, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useParamsStore } from '../../stores/paramsStore';
-import { submitParam } from '../../api/page-apis/submit-api';
-import { Header, CameraParamInput, SubmitButton } from '../public-components';
+import { useParamsStore } from '@/stores/paramsStore';
+import { submitParam } from '@/api/page-apis/submit-api';
+import { Header, CameraParamInput, SubmitButton } from '@/components/public-components';
 
 export default function SubmitPage() {
   const router = useRouter();

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, ScrollView, ActivityIndicator, StyleSheet, Dimensions } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useParamsStore } from '../../stores/paramsStore';
-import { getDetail } from '../../api/page-apis/detail-api';
-import { Header } from '../public-components';
-import { CameraParam } from '../../api/public-apis/types';
+import { useParamsStore } from '@/stores/paramsStore';
+import { getDetail } from '@/api/page-apis/detail-api';
+import { Header } from '@/components/public-components';
+import { CameraParam } from '@/api/public-apis/types';
 
 const { width } = Dimensions.get('window');
 

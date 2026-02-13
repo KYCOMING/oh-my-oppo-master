@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, ActivityIndicator, StyleSheet, RefreshControl } from 'react-native';
-import { useParamsStore } from '../../stores/paramsStore';
-import { getParamsList } from '../../api/page-apis/home-api';
-import { ParamCard, Header } from '../public-components';
+import { useParamsStore } from '@/stores/paramsStore';
+import { getParamsList } from '@/api/page-apis/home-api';
+import { ParamCard, Header } from '@/components/public-components';
 
 export default function HomePage() {
   const { params, setParams } = useParamsStore();

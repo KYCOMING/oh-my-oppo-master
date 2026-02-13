@@ -1,5 +1,5 @@
-import { CameraParam } from '../public-apis/types';
-import { mockParamsList } from '../mock/home-mock';
+import { CameraParam } from '@/api/public-apis/types';
+import { mockParamsList } from '@/api/mock/home-mock';
 
 // 获取参数列表：返回CameraParam数组
 export function getParamsList(): Promise<CameraParam[]> {

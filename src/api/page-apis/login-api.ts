@@ -1,5 +1,5 @@
-import { User } from '../public-apis/types';
-import { mockLogin, mockSendCode } from '../mock/login-mock';
+import { User } from '@/api/public-apis/types';
+import { mockLogin, mockSendCode } from '@/api/mock/login-mock';
 
 // 发送验证码
 export async function sendVerifyCode(phone: string): Promise<void> {

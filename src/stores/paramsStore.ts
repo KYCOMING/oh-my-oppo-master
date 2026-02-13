@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { CameraParam } from '../api/public-apis/types';
+import { CameraParam } from '@/api/public-apis/types';
 
 interface ParamsState {
   params: CameraParam[];

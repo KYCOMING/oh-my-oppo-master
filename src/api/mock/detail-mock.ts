@@ -1,5 +1,5 @@
-import { CameraParam } from '../public-apis/types';
-import { mockParamsList } from './home-mock';
+import { CameraParam } from '@/api/public-apis/types';
+import { mockParamsList } from '@/api/mock/home-mock';
 
 export const mockDetail = (id: string): Promise<CameraParam> => {
   const found = mockParamsList.find((p) => p.id === id);

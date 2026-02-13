@@ -1,4 +1,4 @@
-import { CameraParam } from '../public-apis/types';
+import { CameraParam } from '@/api/public-apis/types';
 
 type SubmitParamPayload = Omit<CameraParam, 'id' | 'createdAt'>;
 export const mockSubmit = (param: SubmitParamPayload): Promise<{ id: string }> => {

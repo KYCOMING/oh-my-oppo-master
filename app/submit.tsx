@@ -1,5 +1,5 @@
 import React from 'react';
-import SubmitPage from '../src/components/page-components/SubmitPage';
+import SubmitPage from '@/components/page-components/SubmitPage';
 
 export default function SubmitScreen() {
   return <SubmitPage />;

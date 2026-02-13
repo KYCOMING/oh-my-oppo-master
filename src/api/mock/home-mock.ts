@@ -1,4 +1,4 @@
-import { CameraParam } from '../public-apis/types';
+import { CameraParam } from '@/api/public-apis/types';
 
 export const mockParamsList: CameraParam[] = [
   {

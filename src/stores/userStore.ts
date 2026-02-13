@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { User } from '../api/public-apis/types';
+import { User } from '@/api/public-apis/types';
 
 interface UserState {
   phone: string | null;
