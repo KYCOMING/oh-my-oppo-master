@@ -41,14 +41,16 @@ app/                         # 路由层（expo-router 文件路由，只做渲�
 src/
 ├── api/
 │   ├── page-apis/          # 页面级 API
-│   ├── public-apis/        # 类型和工具
-│   └── mock/               # Mock 数据
+│   ├── public-apis/       # 类型定义 (types.ts)
+│   └── mock/              # Mock 数据 (仅登录相关)
 ├── components/
 │   ├── page-components/    # 页面组件（业务逻辑 + UI）
-│   └── public-components/  # 公共组件（可复用 UI）
+│   ├── public-components/  # 公共组件（可复用 UI）
+│   └── ui/                # UI 组件库 (gluestack-ui-provider)
 ├── dao/                    # 数据库访问层（SQLite）
 │   ├── database.ts        # 数据库初始化
-│   └── camera-param-dao.ts # CameraParam CRUD 操作
+│   ├── camera-param-dao.ts # CameraParam CRUD 操作
+│   └── index.ts          # 统一导出
 └── stores/                 # Zustand 状态管理
 ```
 

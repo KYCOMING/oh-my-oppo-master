@@ -1,7 +1,6 @@
 import { CameraParam } from '@/api/public-apis/types';
-import { mockDetail } from '@/api/mock/detail-mock';
+import { cameraParamDAO } from '@/dao/camera-param-dao';
 
-// 获取参数详情
-export function getDetail(id: string): Promise<CameraParam> {
-  return mockDetail(id);
+export function getDetail(id: string): Promise<CameraParam | null> {
+  return cameraParamDAO.getById(id);
 }
