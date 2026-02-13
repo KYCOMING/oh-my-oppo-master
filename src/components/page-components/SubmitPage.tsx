@@ -3,7 +3,8 @@ import { View, Text, ScrollView, StyleSheet, TextInput, Alert, KeyboardAvoidingV
 import { useRouter } from 'expo-router';
 import { useParamsStore } from '@/stores/paramsStore';
 import { submitParam } from '@/api/page-apis/submit-api';
-import { Header, CameraParamInput, SubmitButton } from '@/components/public-components';
+import { Header, CameraParamInput, SubmitButton, ImagePickerComponent } from '@/components/public-components';
+import { copyImagesToDocuments } from '@/utils/image-storage';
 
 export default function SubmitPage() {
   const router = useRouter();
@@ -12,7 +13,7 @@ export default function SubmitPage() {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [images, setImages] = useState<string[]>(Array(9).fill(''));
+  const [images, setImages] = useState<string[]>([]);
   const [cameraSettings, setCameraSettings] = useState({
     iso: '',
     shutterSpeed: '',
@@ -22,18 +23,11 @@ export default function SubmitPage() {
     exposure: '',
   });
 
-  const handleImageChange = (index: number, value: string) => {
-    const newImages = [...images];
-    newImages[index] = value;
-    setImages(newImages);
-  };
-
   const handleSettingChange = (key: string, value: string) => {
     setCameraSettings((prev) => ({ ...prev, [key]: value }));
   };
 
   const handleSubmit = async () => {
-    // Validation
     if (!title || title.length > 20) {
       Alert.alert('提示', '标题不能为空，且不能超过20字');
       return;
@@ -43,19 +37,20 @@ export default function SubmitPage() {
       return;
     }
 
-    const validImages = images.filter((img) => img.trim() !== '');
-    if (validImages.length === 0) {
-      Alert.alert('提示', '请至少输入一张图片URL');
+    if (images.length === 0) {
+      Alert.alert('提示', '请至少选择一张图片');
       return;
     }
 
     setLoading(true);
     try {
+      const persistedImages = await copyImagesToDocuments(images);
+      
       const param = {
         title,
         description,
-        images: validImages,
-        thumbnail: validImages[0],
+        images: persistedImages,
+        thumbnail: persistedImages[0],
         cameraSettings,
         author: { phone: 'anonymous' },
       };
@@ -67,7 +62,7 @@ export default function SubmitPage() {
         createdAt: new Date().toISOString(),
       });
       router.replace('/');
-    } catch (error) {
+    } catch {
       Alert.alert('错误', '提交失败');
     } finally {
       setLoading(false);
@@ -123,22 +118,12 @@ export default function SubmitPage() {
 
           {/* Images */}
           <View style={styles.fieldContainer}>
-            <Text style={styles.label}>图片URL（9张）</Text>
-            {images.map((url, index) => (
-              <View key={index} style={styles.imageInputContainer} testID={`image-input-container-${index}`}>
-                <Text style={styles.imageLabel}>图片{index + 1}</Text>
-                <View style={styles.inputContainer}>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="请输入图片URL"
-                    placeholderTextColor="#737373"
-                    value={url}
-                    onChangeText={(value) => handleImageChange(index, value)}
-                    testID={`image-input-${index}`}
-                  />
-                </View>
-              </View>
-            ))}
+            <Text style={styles.label}>图片（最多3张）</Text>
+            <ImagePickerComponent
+              images={images}
+              onImagesChange={setImages}
+              maxImages={3}
+            />
           </View>
 
           {/* Camera Settings */}
