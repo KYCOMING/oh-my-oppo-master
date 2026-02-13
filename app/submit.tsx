@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
   },
   form: {
     padding: 16,
-    paddingBottom: 32,
+    paddingBottom: 120,
   },
   fieldContainer: {
     marginBottom: 16,
