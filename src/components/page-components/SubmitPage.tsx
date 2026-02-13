@@ -52,18 +52,20 @@ export default function SubmitPage() {
     setLoading(true);
     try {
       const param = {
-        id: Date.now().toString(),
         title,
         description,
         images: validImages,
         thumbnail: validImages[0],
         cameraSettings,
         author: { phone: 'anonymous' },
-        createdAt: new Date().toISOString(),
       };
 
-      await submitParam(param);
-      addParam(param);
+      const { id } = await submitParam(param);
+      addParam({
+        ...param,
+        id,
+        createdAt: new Date().toISOString(),
+      });
       router.replace('/');
     } catch (error) {
       Alert.alert('错误', '提交失败');

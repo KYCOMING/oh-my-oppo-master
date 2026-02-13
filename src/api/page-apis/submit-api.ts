@@ -1,7 +1,13 @@
 import { CameraParam } from '@/api/public-apis/types';
-import { mockSubmit } from '@/api/mock/submit-mock';
+import { cameraParamDAO } from '@/dao/camera-param-dao';
 
-// 提交参数（移除 id、createdAt 字段，交给后端生成）
 export function submitParam(param: Omit<CameraParam, 'id' | 'createdAt'>): Promise<{ id: string }> {
-  return mockSubmit(param);
+  const id = 'sub_' + Date.now().toString(16) + Math.random().toString(16).slice(2, 6);
+  const fullParam: CameraParam = {
+    ...param,
+    id,
+    createdAt: new Date().toISOString(),
+  };
+
+  return cameraParamDAO.insert(fullParam).then(() => ({ id }));
 }

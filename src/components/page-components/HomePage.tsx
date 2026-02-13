@@ -5,8 +5,9 @@ import { getParamsList } from '@/api/page-apis/home-api';
 import { ParamCard, Header } from '@/components/public-components';
 
 export default function HomePage() {
-  const { params, setParams } = useParamsStore();
-  const [loading, setLoading] = useState(true);
+  const params = useParamsStore((state) => state.params);
+  const loading = useParamsStore((state) => state.loading);
+  const setParams = useParamsStore((state) => state.setParams);
   const [refreshing, setRefreshing] = useState(false);
 
   const fetchParams = async () => {
@@ -16,14 +17,15 @@ export default function HomePage() {
     } catch (error) {
       console.error('Failed to fetch params:', error);
     } finally {
-      setLoading(false);
       setRefreshing(false);
     }
   };
 
   useEffect(() => {
-    fetchParams();
-  }, []);
+    if (!loading && params.length === 0) {
+      fetchParams();
+    }
+  }, [loading, params.length]);
 
   const handleRefresh = () => {
     setRefreshing(true);
@@ -36,7 +38,7 @@ export default function HomePage() {
 
   const keyExtractor = (item: any) => item.id;
 
-  if (loading) {
+  if (loading || params.length === 0) {
     return (
       <View style={styles.loadingContainer} testID="loading-screen">
         <ActivityIndicator size="large" color="#ff5111" testID="loading-spinner" />

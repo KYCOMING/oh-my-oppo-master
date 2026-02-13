@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Stack } from 'expo-router';
 import { StatusBar, View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { usePathname, useRouter } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { useParamsStore } from '@/stores/paramsStore';
+import { initDatabase } from '@/dao/database';
 
 interface TabItemProps {
   title: string;
@@ -55,6 +57,20 @@ function CustomTabBar() {
 }
 
 export default function RootLayout() {
+  const loadFromDatabase = useParamsStore((state) => state.loadFromDatabase);
+
+  useEffect(() => {
+    const init = async () => {
+      try {
+        await initDatabase();
+        await loadFromDatabase();
+      } catch (error) {
+        console.error('Failed to initialize database:', error);
+      }
+    };
+    init();
+  }, [loadFromDatabase]);
+
   return (
     <SafeAreaProvider>
       <View style={styles.root}>
