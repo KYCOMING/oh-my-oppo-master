@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs } from 'expo-router';
+import { Stack } from 'expo-router';
 import { StatusBar, View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { usePathname, useRouter } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -26,6 +26,10 @@ function TabItem({ title, isActive, href }: TabItemProps) {
 
 function CustomTabBar() {
   const pathname = usePathname();
+
+  if (pathname.startsWith('/detail')) {
+    return null;
+  }
 
   return (
     <View style={styles.tabBarContainer}>
@@ -54,25 +58,12 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <View style={styles.root}>
-        <Tabs
-          screenOptions={{
-            headerShown: false,
-            tabBarIcon: () => null,
-            tabBarActiveTintColor: '#ffffff',
-            tabBarInactiveTintColor: '#a3a3a3',
-            tabBarStyle: {
-              display: 'none',
-            },
-            tabBarLabelStyle: {
-              display: 'none',
-            },
-            tabBarButton: () => null,
-          }}
-        >
-          <Tabs.Screen name="index" options={{ title: '首页' }} />
-          <Tabs.Screen name="submit" options={{ title: '提交' }} />
-          <Tabs.Screen name="about" options={{ title: '关于' }} />
-        </Tabs>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="index" />
+          <Stack.Screen name="submit" />
+          <Stack.Screen name="about" />
+          <Stack.Screen name="detail/[id]" />
+        </Stack>
         <CustomTabBar />
         <StatusBar barStyle="light-content" />
       </View>

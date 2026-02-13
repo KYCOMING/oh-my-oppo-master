@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, ScrollView, ActivityIndicator, StyleSheet, Dimensions } from 'react-native';
+import { useRouter } from 'expo-router';
 import { useParamsStore } from '../../stores/paramsStore';
 import { getDetail } from '../../api/page-apis/detail-api';
 import { Header } from '../public-components';
@@ -12,6 +13,7 @@ interface DetailPageProps {
 }
 
 export default function DetailPage({ id }: DetailPageProps) {
+  const router = useRouter();
   const { params } = useParamsStore();
   const [param, setParam] = useState<CameraParam | null>(null);
   const [loading, setLoading] = useState(true);
@@ -51,7 +53,7 @@ export default function DetailPage({ id }: DetailPageProps) {
   if (!param) {
     return (
       <View style={styles.container} testID="error-screen">
-        <Header title="参数详情" showBack onBack={() => {}} />
+        <Header title="参数详情" showBack onBack={() => router.back()} />
         <View style={styles.errorContainer} testID="error-container">
           <Text style={styles.errorText}>参数不存在</Text>
         </View>
@@ -61,7 +63,7 @@ export default function DetailPage({ id }: DetailPageProps) {
 
   return (
     <View style={styles.container} testID="detail-screen">
-      <Header title="参数详情" showBack onBack={() => {}} />
+      <Header title="参数详情" showBack onBack={() => router.back()} />
       
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
         <View style={styles.section}>
@@ -141,7 +143,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    paddingBottom: 120,
+    paddingBottom: 32,
   },
   section: {
     padding: 16,
