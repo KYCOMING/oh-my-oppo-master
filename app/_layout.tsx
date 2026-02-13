@@ -41,9 +41,9 @@ function CustomTabBar() {
           href="/submit"
         />
         <TabItem
-          title="我的"
-          isActive={pathname === '/login'}
-          href="/login"
+          title="关于"
+          isActive={pathname === '/about'}
+          href="/about"
         />
       </View>
     </View>
@@ -71,7 +71,7 @@ export default function RootLayout() {
         >
           <Tabs.Screen name="index" options={{ title: '首页' }} />
           <Tabs.Screen name="submit" options={{ title: '提交' }} />
-          <Tabs.Screen name="login" options={{ title: '我的' }} />
+          <Tabs.Screen name="about" options={{ title: '关于' }} />
         </Tabs>
         <CustomTabBar />
         <StatusBar barStyle="light-content" />

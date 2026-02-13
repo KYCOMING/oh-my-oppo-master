@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, TextInput, Alert, KeyboardAvoidingView, Platform, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useUserStore } from '../src/stores/userStore';
 import { useParamsStore } from '../src/stores/paramsStore';
 import { submitParam } from '../src/api/page-apis/submit-api';
 import { Header, CameraParamInput, SubmitButton } from '../src/components/public-components';
 
 export default function SubmitScreen() {
   const router = useRouter();
-  const { phone } = useUserStore();
   const { addParam } = useParamsStore();
   const [loading, setLoading] = useState(false);
 
@@ -51,11 +49,6 @@ export default function SubmitScreen() {
       return;
     }
 
-    if (!phone) {
-      Alert.alert('提示', '请先登录');
-      return;
-    }
-
     setLoading(true);
     try {
       const param = {
@@ -65,7 +58,7 @@ export default function SubmitScreen() {
         images: validImages,
         thumbnail: validImages[0],
         cameraSettings,
-        author: { phone: phone as string },
+        author: { phone: 'anonymous' },
         createdAt: new Date().toISOString(),
       };
 
