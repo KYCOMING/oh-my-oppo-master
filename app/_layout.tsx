@@ -2,6 +2,7 @@ import React from 'react';
 import { Tabs } from 'expo-router';
 import { StatusBar, View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { usePathname, useRouter } from 'expo-router';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 interface TabItemProps {
   title: string;
@@ -51,29 +52,31 @@ function CustomTabBar() {
 
 export default function RootLayout() {
   return (
-    <View style={styles.root}>
-      <Tabs
-        screenOptions={{
-          headerShown: false,
-          tabBarIcon: () => null,
-          tabBarActiveTintColor: '#ffffff',
-          tabBarInactiveTintColor: '#a3a3a3',
-          tabBarStyle: {
-            display: 'none',
-          },
-          tabBarLabelStyle: {
-            display: 'none',
-          },
-          tabBarButton: () => null,
-        }}
-      >
-        <Tabs.Screen name="index" options={{ title: '首页' }} />
-        <Tabs.Screen name="submit" options={{ title: '提交' }} />
-        <Tabs.Screen name="login" options={{ title: '我的' }} />
-      </Tabs>
-      <CustomTabBar />
-      <StatusBar barStyle="light-content" />
-    </View>
+    <SafeAreaProvider>
+      <View style={styles.root}>
+        <Tabs
+          screenOptions={{
+            headerShown: false,
+            tabBarIcon: () => null,
+            tabBarActiveTintColor: '#ffffff',
+            tabBarInactiveTintColor: '#a3a3a3',
+            tabBarStyle: {
+              display: 'none',
+            },
+            tabBarLabelStyle: {
+              display: 'none',
+            },
+            tabBarButton: () => null,
+          }}
+        >
+          <Tabs.Screen name="index" options={{ title: '首页' }} />
+          <Tabs.Screen name="submit" options={{ title: '提交' }} />
+          <Tabs.Screen name="login" options={{ title: '我的' }} />
+        </Tabs>
+        <CustomTabBar />
+        <StatusBar barStyle="light-content" />
+      </View>
+    </SafeAreaProvider>
   );
 }
 

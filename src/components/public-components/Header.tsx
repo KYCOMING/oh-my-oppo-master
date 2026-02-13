@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Platform } from 'react-native';
+import { View, Text, StyleSheet, Platform } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface HeaderProps {
   title: string;
