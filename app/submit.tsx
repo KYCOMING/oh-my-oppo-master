@@ -87,7 +87,7 @@ export default function SubmitScreen() {
     >
       <Header title="提交参数" />
       
-      <ScrollView style={styles.scrollContent} keyboardShouldPersistTaps="handled">
+      <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
         <View style={styles.form}>
           {/* Title */}
           <View style={styles.fieldContainer}>

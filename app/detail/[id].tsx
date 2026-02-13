@@ -64,7 +64,7 @@ export default function DetailScreen() {
     <View style={styles.container} testID="detail-screen">
       <Header title="参数详情" showBack onBack={() => {}} />
       
-      <ScrollView style={styles.scrollContent}>
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
         {/* Title */}
         <View style={styles.section}>
           <Text style={styles.title} testID="detail-title">
@@ -108,13 +108,6 @@ export default function DetailScreen() {
             <ParamRow label="曝光补偿" value={param.cameraSettings.exposure} />
           </View>
         </View>
-
-        {/* Author */}
-        <View style={styles.section}>
-          <Text style={styles.authorText} testID="detail-author">
-            提交者：{param.author.phone}
-          </Text>
-        </View>
       </ScrollView>
     </View>
   );
@@ -149,8 +142,11 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 18,
   },
-  scrollContent: {
+  scrollView: {
     flex: 1,
+  },
+  scrollContent: {
+    paddingBottom: 120,
   },
   section: {
     padding: 16,
@@ -201,10 +197,5 @@ const styles = StyleSheet.create({
   paramValue: {
     color: '#ffffff',
     fontSize: 16,
-  },
-  authorText: {
-    color: '#737373',
-    fontSize: 14,
-    textAlign: 'right',
   },
 });

@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     alignItems: 'center',
+    pointerEvents: 'none',
   },
   tabBar: {
     flexDirection: 'row',
@@ -99,6 +100,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 16,
     gap: 8,
+    pointerEvents: 'auto',
   },
   tabItem: {
     paddingHorizontal: 20,
