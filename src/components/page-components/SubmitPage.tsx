@@ -90,7 +90,7 @@ export default function SubmitPage() {
       keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
       testID="submit-screen"
     >
-      <Header title="提交参数" />
+      <Header title="影调预设" />
       
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
         <View style={styles.form}>

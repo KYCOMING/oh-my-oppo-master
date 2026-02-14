@@ -75,7 +75,7 @@ export default function HomePage() {
 
   return (
     <View style={styles.container} testID="home-screen">
-      <Header title="相机参数" />
+      <Header title="影调" />
       <FlatList
         data={params}
         renderItem={renderItem}

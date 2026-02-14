@@ -43,7 +43,7 @@ function CustomTabBar() {
           href="/"
         />
         <TabItem
-          title="提交"
+          title="预设"
           isActive={pathname === '/submit'}
           href="/submit"
         />
