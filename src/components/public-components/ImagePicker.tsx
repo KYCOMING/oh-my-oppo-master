@@ -11,7 +11,7 @@ interface ImagePickerComponentProps {
 export function ImagePickerComponent({
   images,
   onImagesChange,
-  maxImages = 3,
+  maxImages = 9,
 }: ImagePickerComponentProps) {
   const pickImage = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();

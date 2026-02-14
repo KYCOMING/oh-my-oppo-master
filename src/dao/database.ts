@@ -226,9 +226,9 @@ export async function initDatabase(): Promise<SQLite.SQLiteDatabase> {
 
 export async function getDatabase(): Promise<SQLite.SQLiteDatabase> {
   if (!db) {
-    return initDatabase();
+    await initDatabase();
   }
-  return db;
+  return db!;
 }
 
 export async function closeDatabase(): Promise<void> {

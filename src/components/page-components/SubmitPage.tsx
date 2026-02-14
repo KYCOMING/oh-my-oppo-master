@@ -132,11 +132,11 @@ export default function SubmitPage() {
 
           {/* Images */}
           <View style={styles.fieldContainer}>
-            <Text style={styles.label}>图片（最多3张）</Text>
+            <Text style={styles.label}>图片（最多9张）</Text>
             <ImagePickerComponent
               images={images}
               onImagesChange={setImages}
-              maxImages={3}
+              maxImages={9}
             />
           </View>
 
