@@ -3,15 +3,16 @@ import { View, Text, FlatList, ActivityIndicator, StyleSheet, RefreshControl, Mo
 import * as Haptics from 'expo-haptics';
 import { useParamsStore } from '@/stores/paramsStore';
 import { getParamsList } from '@/api/page-apis/home-api';
-import { cameraParamDAO } from '@/dao/camera-param-dao';
+import { cameraParamDAO, reinitializeData } from '@/dao';
 import { ParamCard, Header } from '@/components/public-components';
 
 export default function HomePage() {
   const params = useParamsStore((state) => state.params);
-  const loading = useParamsStore((state) => state.loading);
   const setParams = useParamsStore((state) => state.setParams);
   const removeParam = useParamsStore((state) => state.removeParam);
   const [refreshing, setRefreshing] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
+  const [isEmpty, setIsEmpty] = useState(false);
   const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
@@ -19,18 +20,27 @@ export default function HomePage() {
     try {
       const data = await getParamsList();
       setParams(data);
+      setIsEmpty(data.length === 0);
     } catch (error) {
       console.error('Failed to fetch params:', error);
     } finally {
       setRefreshing(false);
+      setInitialLoading(false);
+    }
+  };
+
+  const handleInitialize = async () => {
+    try {
+      await reinitializeData();
+      await fetchParams();
+    } catch (error) {
+      console.error('Failed to initialize:', error);
     }
   };
 
   useEffect(() => {
-    if (!loading && params.length === 0) {
-      fetchParams();
-    }
-  }, [loading, params.length]);
+    fetchParams();
+  }, []);
 
   const handleRefresh = () => {
     setRefreshing(true);
@@ -48,6 +58,7 @@ export default function HomePage() {
     try {
       await cameraParamDAO.delete(selectedId);
       removeParam(selectedId);
+      await fetchParams();
     } catch (error) {
       console.error('Failed to delete:', error);
     } finally {
@@ -67,10 +78,23 @@ export default function HomePage() {
 
   const keyExtractor = (item: any) => item.id;
 
-  if (loading || params.length === 0) {
+  if (initialLoading) {
     return (
       <View style={styles.loadingContainer} testID="loading-screen">
         <ActivityIndicator size="large" color="#ff5111" testID="loading-spinner" />
+      </View>
+    );
+  }
+
+  if (isEmpty) {
+    return (
+      <View style={styles.container} testID="home-screen">
+        <Header title="影调" />
+        <View style={styles.emptyWrapper}>
+          <Pressable style={styles.initButton} onPress={handleInitialize}>
+            <Text style={styles.initButtonText}>暂无数据，是否初始化？</Text>
+          </Pressable>
+        </View>
       </View>
     );
   }
@@ -89,11 +113,6 @@ export default function HomePage() {
             onRefresh={handleRefresh}
             tintColor="#ff5111"
           />
-        }
-        ListEmptyComponent={
-          <View style={styles.emptyContainer} testID="empty-state">
-            <Text style={styles.emptyText}>暂无数据</Text>
-          </View>
         }
       />
       <Modal
@@ -137,8 +156,25 @@ const styles = StyleSheet.create({
     paddingBottom: 100,
   },
   emptyContainer: {
-    padding: 32,
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
+  },
+  emptyWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  initButton: {
+    backgroundColor: '#ff5111',
+    paddingHorizontal: 24,
+    paddingVertical: 14,
+    borderRadius: 8,
+  },
+  initButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '500',
   },
   emptyText: {
     color: '#737373',

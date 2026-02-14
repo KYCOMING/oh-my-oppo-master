@@ -24,7 +24,7 @@ const initialData: CameraParam[] = [
     thumbnail: 'https://picsum.photos/seed/ny1/400/300',
     cameraSettings: {
       shootMode: 'PRO',
-      filter: 'standard',
+      filter: '富士',
       softLight: 'none',
       tone: 50,
       saturation: 50,
@@ -57,7 +57,7 @@ const initialData: CameraParam[] = [
     thumbnail: 'https://picsum.photos/seed/portrait1/400/300',
     cameraSettings: {
       shootMode: 'PRO',
-      filter: 'vivid',
+      filter: '蓝调',
       softLight: 'soft',
       tone: 60,
       saturation: 70,
@@ -90,7 +90,7 @@ const initialData: CameraParam[] = [
     thumbnail: 'https://picsum.photos/seed/sport1/400/300',
     cameraSettings: {
       shootMode: 'PRO',
-      filter: 'clear',
+      filter: '徕卡',
       softLight: 'dreamy',
       tone: 45,
       saturation: 55,
@@ -108,11 +108,28 @@ const initialData: CameraParam[] = [
 ];
 
 async function seedInitialData(database: SQLite.SQLiteDatabase): Promise<void> {
-  const result = await database.getFirstAsync<{ count: number }>(
-    'SELECT COUNT(*) as count FROM camera_params'
-  );
-  
-  if (result && result.count === 0) {
+  try {
+    const initRecord = await database.getFirstAsync<{ key: string }>(
+      'SELECT key FROM app_config WHERE key = ?',
+      ['initialized']
+    );
+    
+    if (initRecord) {
+      return;
+    }
+    
+    const countResult = await database.getFirstAsync<{ count: number }>(
+      'SELECT COUNT(*) as count FROM camera_params'
+    );
+    
+    if (countResult && countResult.count > 0) {
+      await database.runAsync(
+        'INSERT OR IGNORE INTO app_config (key, value) VALUES (?, ?)',
+        ['initialized', 'true']
+      );
+      return;
+    }
+    
     for (const param of initialData) {
       await database.runAsync(
         `INSERT INTO camera_params (id, title, description, images, thumbnail, camera_settings, author_phone, author_nickname, created_at)
@@ -130,7 +147,39 @@ async function seedInitialData(database: SQLite.SQLiteDatabase): Promise<void> {
         ]
       );
     }
+    
+    await database.runAsync(
+      'INSERT INTO app_config (key, value) VALUES (?, ?)',
+      ['initialized', 'true']
+    );
+  } catch (error) {
+    console.error('seedInitialData error:', error);
   }
+}
+
+async function forceSeedInitialData(database: SQLite.SQLiteDatabase): Promise<void> {
+  for (const param of initialData) {
+    await database.runAsync(
+      `INSERT OR REPLACE INTO camera_params (id, title, description, images, thumbnail, camera_settings, author_phone, author_nickname, created_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        param.id,
+        param.title,
+        param.description,
+        JSON.stringify(param.images),
+        param.thumbnail,
+        JSON.stringify(param.cameraSettings),
+        param.author.phone,
+        param.author.nickname || null,
+        param.createdAt,
+      ]
+    );
+  }
+}
+
+export async function reinitializeData(): Promise<void> {
+  const database = await getDatabase();
+  await forceSeedInitialData(database);
 }
 
 export async function initDatabase(): Promise<SQLite.SQLiteDatabase> {
@@ -157,6 +206,13 @@ export async function initDatabase(): Promise<SQLite.SQLiteDatabase> {
 
     await db.execAsync(`
       CREATE INDEX IF NOT EXISTS idx_created_at ON camera_params(created_at);
+    `);
+
+    await db.execAsync(`
+      CREATE TABLE IF NOT EXISTS app_config (
+        key TEXT PRIMARY KEY NOT NULL,
+        value TEXT NOT NULL
+      );
     `);
 
     await seedInitialData(db);
