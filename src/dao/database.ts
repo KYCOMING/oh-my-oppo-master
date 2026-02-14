@@ -24,7 +24,7 @@ const initialData: CameraParam[] = [
     thumbnail: 'https://picsum.photos/seed/ny1/400/300',
     cameraSettings: {
       shootMode: 'PRO',
-      filter: '富士',
+      filter: 'cold',
       softLight: 'none',
       tone: 50,
       saturation: 50,
@@ -57,7 +57,7 @@ const initialData: CameraParam[] = [
     thumbnail: 'https://picsum.photos/seed/portrait1/400/300',
     cameraSettings: {
       shootMode: 'PRO',
-      filter: '蓝调',
+      filter: 'vivid',
       softLight: 'soft',
       tone: 60,
       saturation: 70,
@@ -90,7 +90,7 @@ const initialData: CameraParam[] = [
     thumbnail: 'https://picsum.photos/seed/sport1/400/300',
     cameraSettings: {
       shootMode: 'PRO',
-      filter: '徕卡',
+      filter: 'rich',
       softLight: 'dreamy',
       tone: 45,
       saturation: 55,
