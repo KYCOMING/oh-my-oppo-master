@@ -85,6 +85,54 @@ export const FILTER_OPTIONS = [
   { label: '单色', value: 'mono' },
 ];
 
+export const SHOOT_MODE_OPTIONS = [
+  { label: 'AUTO', value: 'AUTO' },
+  { label: 'PRO', value: 'PRO' },
+];
+
+export const SOFT_LIGHT_OPTIONS = [
+  { label: '无', value: 'none' },
+  { label: '柔美', value: 'soft' },
+  { label: '梦幻', value: 'dreamy' },
+  { label: '朦胧', value: 'hazy' },
+];
+
+export const VIGNETTE_OPTIONS = [
+  { label: '开启', value: 'on' },
+  { label: '关闭', value: 'off' },
+];
+
+export const TONE_DEFAULT = 50;
+export const SATURATION_DEFAULT = 50;
+export const TEMPERATURE_DEFAULT = 50;
+export const TINT_DEFAULT = 50;
+export const SHARPNESS_DEFAULT = 50;
+
+export const TONE_OPTIONS: { label: string; value: string }[] = [];
+for (let i = 0; i <= 100; i++) {
+  TONE_OPTIONS.push({ label: `${i}`, value: `${i}` });
+}
+
+export const SATURATION_OPTIONS: { label: string; value: string }[] = [];
+for (let i = 0; i <= 100; i++) {
+  SATURATION_OPTIONS.push({ label: `${i}`, value: `${i}` });
+}
+
+export const TEMPERATURE_OPTIONS: { label: string; value: string }[] = [];
+for (let i = 0; i <= 100; i++) {
+  TEMPERATURE_OPTIONS.push({ label: `${i}`, value: `${i}` });
+}
+
+export const TINT_OPTIONS: { label: string; value: string }[] = [];
+for (let i = 0; i <= 100; i++) {
+  TINT_OPTIONS.push({ label: `${i}`, value: `${i}` });
+}
+
+export const SHARPNESS_OPTIONS: { label: string; value: string }[] = [];
+for (let i = 0; i <= 100; i++) {
+  SHARPNESS_OPTIONS.push({ label: `${i}`, value: `${i}` });
+}
+
 export const EXPOSURE_OPTIONS: { label: string; value: string }[] = [];
 for (let i = -30; i <= 30; i++) {
   const ev = i * 0.1;

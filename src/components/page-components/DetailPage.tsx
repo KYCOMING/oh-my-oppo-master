@@ -5,7 +5,7 @@ import { useParamsStore } from '@/stores/paramsStore';
 import { getDetail } from '@/api/page-apis/detail-api';
 import { Header } from '@/components/public-components';
 import { CameraParam } from '@/api/public-apis/types';
-import { FILTER_OPTIONS } from '@/utils/camera-options';
+import { FILTER_OPTIONS, SHOOT_MODE_OPTIONS, SOFT_LIGHT_OPTIONS } from '@/utils/camera-options';
 
 const { width } = Dimensions.get('window');
 
@@ -96,15 +96,29 @@ export default function DetailPage({ id }: DetailPageProps) {
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>相机参数</Text>
+          <Text style={styles.sectionTitle}>基础参数</Text>
           <View style={styles.settingsCard} testID="detail-settings">
-            <ParamRow label="ISO（感光度）" value={param.cameraSettings.iso} />
-            <ParamRow label="快门速度" value={param.cameraSettings.shutterSpeed} />
-            <ParamRow label="光圈" value={param.cameraSettings.aperture} />
-            <ParamRow label="白平衡" value={param.cameraSettings.whiteBalance} />
-            <ParamRow label="对焦" value={param.cameraSettings.focus} />
-            <ParamRow label="曝光补偿" value={param.cameraSettings.exposure} />
-            <ParamRow label="滤镜" value={FILTER_OPTIONS.find(opt => opt.value === param.cameraSettings.filter)?.label || param.cameraSettings.filter} />
+            <ParamRow label="拍摄模式" value={SHOOT_MODE_OPTIONS.find(opt => opt.value === param.cameraSettings.shootMode)?.label || param.cameraSettings.shootMode} />
+            <ParamRow label="滤镜风格" value={FILTER_OPTIONS.find(opt => opt.value === param.cameraSettings.filter)?.label || param.cameraSettings.filter} />
+            <ParamRow label="柔光效果" value={SOFT_LIGHT_OPTIONS.find(opt => opt.value === param.cameraSettings.softLight)?.label || param.cameraSettings.softLight} />
+          </View>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>调色参数</Text>
+          <View style={styles.settingsCard} testID="detail-settings">
+            <ParamRow label="影调" value={String(param.cameraSettings.tone)} />
+            <ParamRow label="饱和度" value={String(param.cameraSettings.saturation)} />
+            <ParamRow label="冷暖" value={String(param.cameraSettings.temperature)} />
+            <ParamRow label="青品" value={String(param.cameraSettings.tint)} />
+            <ParamRow label="锐度" value={String(param.cameraSettings.sharpness)} />
+          </View>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>其他</Text>
+          <View style={styles.settingsCard} testID="detail-settings">
+            <ParamRow label="暗角" value={param.cameraSettings.vignette === 'on' ? '开启' : '关闭'} />
           </View>
         </View>
       </ScrollView>

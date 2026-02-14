@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { getOptionIndex, getOptionValue } from '@/utils/camera-options';
@@ -24,24 +24,48 @@ export function CameraParamSlider({
   testID,
 }: CameraParamSliderProps) {
   const [sliderValue, setSliderValue] = useState(0);
+  const [displayValue, setDisplayValue] = useState('');
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (options.length === 0) return;
     const index = getOptionIndex(value, options);
     setSliderValue(index);
+    setDisplayValue(options[index]?.label ?? '');
   }, [value, options]);
 
-  const handleValueChange = (newValue: number) => {
-    const newVal = getOptionValue(newValue, options);
-    onChange(newVal);
-  };
+  const handleValueChange = useCallback((newValue: number) => {
+    const roundedValue = Math.round(newValue);
+    setSliderValue(roundedValue);
+    const optionValue = getOptionValue(roundedValue, options);
+    setDisplayValue(options[roundedValue]?.label ?? '');
 
-  const handleSlidingComplete = (newValue: number) => {
-    setSliderValue(newValue);
-  };
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
+    debounceRef.current = setTimeout(() => {
+      onChange(optionValue);
+    }, 100);
+  }, [options, onChange]);
 
-  const currentOption = options[Math.round(sliderValue)];
-  const displayValue = currentOption?.label ?? '';
+  const handleSlidingComplete = useCallback((newValue: number) => {
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
+    const roundedValue = Math.round(newValue);
+    const optionValue = getOptionValue(roundedValue, options);
+    setSliderValue(roundedValue);
+    setDisplayValue(options[roundedValue]?.label ?? '');
+    onChange(optionValue);
+  }, [options, onChange]);
+
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+      }
+    };
+  }, []);
 
   return (
     <View style={styles.container} testID={testID}>

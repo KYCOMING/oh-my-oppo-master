@@ -6,13 +6,15 @@ import { submitParam } from '@/api/page-apis/submit-api';
 import { Header, CameraParamSlider, CameraParamPicker, FilterPicker, SubmitButton, ImagePickerComponent } from '@/components/public-components';
 import { copyImagesToDocuments } from '@/utils/image-storage';
 import {
-  ISO_OPTIONS,
-  SHUTTER_SPEED_OPTIONS,
-  APERTURE_OPTIONS,
-  WHITE_BALANCE_OPTIONS,
-  FOCUS_OPTIONS,
-  EXPOSURE_OPTIONS,
   FILTER_OPTIONS,
+  SHOOT_MODE_OPTIONS,
+  SOFT_LIGHT_OPTIONS,
+  VIGNETTE_OPTIONS,
+  TONE_OPTIONS,
+  SATURATION_OPTIONS,
+  TEMPERATURE_OPTIONS,
+  TINT_OPTIONS,
+  SHARPNESS_OPTIONS,
 } from '@/utils/camera-options';
 
 export default function SubmitPage() {
@@ -24,16 +26,18 @@ export default function SubmitPage() {
   const [description, setDescription] = useState('');
   const [images, setImages] = useState<string[]>([]);
   const [cameraSettings, setCameraSettings] = useState({
-    iso: ISO_OPTIONS[3].value,
-    shutterSpeed: SHUTTER_SPEED_OPTIONS[7].value,
-    aperture: APERTURE_OPTIONS[3].value,
-    whiteBalance: WHITE_BALANCE_OPTIONS[0].value,
-    focus: FOCUS_OPTIONS[1].value,
-    exposure: EXPOSURE_OPTIONS[30].value,
+    shootMode: 'AUTO' as const,
     filter: FILTER_OPTIONS[0].value,
+    softLight: 'none' as const,
+    tone: 50,
+    saturation: 50,
+    temperature: 50,
+    tint: 50,
+    sharpness: 50,
+    vignette: 'off' as const,
   });
 
-  const handleSettingChange = (key: string, value: string) => {
+  const handleSettingChange = (key: string, value: string | number) => {
     setCameraSettings((prev) => ({ ...prev, [key]: value }));
   };
 
@@ -137,62 +141,82 @@ export default function SubmitPage() {
           </View>
 
           {/* Camera Settings */}
-          <Text style={styles.sectionTitle}>相机参数</Text>
-          
-          <CameraParamSlider
-            label="ISO（感光度）"
-            value={cameraSettings.iso}
-            options={ISO_OPTIONS}
-            onChange={(value) => handleSettingChange('iso', value)}
-            testID="iso-slider"
-          />
-          
-          <CameraParamSlider
-            label="快门速度"
-            value={cameraSettings.shutterSpeed}
-            options={SHUTTER_SPEED_OPTIONS}
-            onChange={(value) => handleSettingChange('shutterSpeed', value)}
-            testID="shutter-slider"
-          />
-          
-          <CameraParamSlider
-            label="光圈"
-            value={cameraSettings.aperture}
-            options={APERTURE_OPTIONS}
-            onChange={(value) => handleSettingChange('aperture', value)}
-            testID="aperture-slider"
-          />
+          <Text style={styles.sectionTitle}>基础参数</Text>
           
           <CameraParamPicker
-            label="白平衡"
-            value={cameraSettings.whiteBalance}
-            options={WHITE_BALANCE_OPTIONS}
-            onChange={(value) => handleSettingChange('whiteBalance', value)}
-            testID="wb-picker"
+            label="拍摄模式"
+            value={cameraSettings.shootMode}
+            options={SHOOT_MODE_OPTIONS}
+            onChange={(value) => handleSettingChange('shootMode', value)}
+            testID="shoot-mode-picker"
           />
           
-          <CameraParamPicker
-            label="对焦"
-            value={cameraSettings.focus}
-            options={FOCUS_OPTIONS}
-            onChange={(value) => handleSettingChange('focus', value)}
-            testID="focus-picker"
-          />
-          
-          <CameraParamSlider
-            label="曝光补偿"
-            value={cameraSettings.exposure}
-            options={EXPOSURE_OPTIONS}
-            onChange={(value) => handleSettingChange('exposure', value)}
-            testID="exposure-slider"
-          />
-
           <FilterPicker
-            label="滤镜"
+            label="滤镜风格"
             value={cameraSettings.filter}
             options={FILTER_OPTIONS}
             onChange={(value) => handleSettingChange('filter', value)}
             testID="filter-picker"
+          />
+          
+          <CameraParamPicker
+            label="柔光效果"
+            value={cameraSettings.softLight}
+            options={SOFT_LIGHT_OPTIONS}
+            onChange={(value) => handleSettingChange('softLight', value)}
+            testID="soft-light-picker"
+          />
+
+          <Text style={styles.sectionTitle}>调色参数</Text>
+          
+          <CameraParamSlider
+            label="影调"
+            value={String(cameraSettings.tone)}
+            options={TONE_OPTIONS}
+            onChange={(value) => handleSettingChange('tone', parseInt(value, 10))}
+            testID="tone-slider"
+          />
+          
+          <CameraParamSlider
+            label="饱和度"
+            value={String(cameraSettings.saturation)}
+            options={SATURATION_OPTIONS}
+            onChange={(value) => handleSettingChange('saturation', parseInt(value, 10))}
+            testID="saturation-slider"
+          />
+          
+          <CameraParamSlider
+            label="冷暖"
+            value={String(cameraSettings.temperature)}
+            options={TEMPERATURE_OPTIONS}
+            onChange={(value) => handleSettingChange('temperature', parseInt(value, 10))}
+            testID="temperature-slider"
+          />
+          
+          <CameraParamSlider
+            label="青品"
+            value={String(cameraSettings.tint)}
+            options={TINT_OPTIONS}
+            onChange={(value) => handleSettingChange('tint', parseInt(value, 10))}
+            testID="tint-slider"
+          />
+          
+          <CameraParamSlider
+            label="锐度"
+            value={String(cameraSettings.sharpness)}
+            options={SHARPNESS_OPTIONS}
+            onChange={(value) => handleSettingChange('sharpness', parseInt(value, 10))}
+            testID="sharpness-slider"
+          />
+
+          <Text style={styles.sectionTitle}>其他</Text>
+          
+          <CameraParamPicker
+            label="暗角"
+            value={cameraSettings.vignette}
+            options={VIGNETTE_OPTIONS}
+            onChange={(value) => handleSettingChange('vignette', value)}
+            testID="vignette-picker"
           />
 
           {/* Submit Button */}

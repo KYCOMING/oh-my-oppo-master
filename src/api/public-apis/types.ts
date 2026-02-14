@@ -5,13 +5,18 @@ export interface CameraParam {
   images: string[]; // 9张图片URL
   thumbnail: string; // 缩略图（第一张图片）
   cameraSettings: {
-    iso: string; // ISO（感光度）
-    shutterSpeed: string; // 快门速度
-    aperture: string; // 光圈
-    whiteBalance: string; // 白平衡
-    focus: string; // 对焦
-    exposure: string; // 曝光补偿
-    filter: string; // 滤镜
+    // 基础参数
+    shootMode: 'AUTO' | 'PRO'; // 拍摄模式
+    filter: string; // 滤镜风格
+    softLight: 'none' | 'soft' | 'dreamy' | 'hazy'; // 柔光效果
+    // 调色参数 (0-100)
+    tone: number; // 影调
+    saturation: number; // 饱和度
+    temperature: number; // 冷暖
+    tint: number; // 青品
+    sharpness: number; // 锐度
+    // 其他
+    vignette: 'on' | 'off'; // 暗角
   };
   author: {
     phone: string; // 提交者手机号
