@@ -15,11 +15,19 @@ interface TabItemProps {
 
 function TabItem({ title, isActive, href }: TabItemProps) {
   const router = useRouter();
+  const pathname = usePathname();
+
+  const handlePress = () => {
+    if (pathname === href || pathname === href + '/') {
+      return;
+    }
+    router.push(href);
+  };
 
   return (
     <TouchableOpacity
       style={[styles.tabItem, isActive && styles.tabItemActive]}
-      onPress={() => router.push(href)}
+      onPress={handlePress}
       activeOpacity={0.7}
     >
       <Text style={[styles.tabText, isActive && styles.tabTextActive]}>{title}</Text>
