@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, ActivityIndicator, StyleSheet, RefreshControl, Modal, Pressable } from 'react-native';
+import * as Haptics from 'expo-haptics';
 import { useParamsStore } from '@/stores/paramsStore';
 import { getParamsList } from '@/api/page-apis/home-api';
 import { cameraParamDAO } from '@/dao/camera-param-dao';
@@ -36,7 +37,8 @@ export default function HomePage() {
     fetchParams();
   };
 
-  const handleLongPress = (id: string) => {
+  const handleLongPress = async (id: string) => {
+    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     setSelectedId(id);
     setDeleteDialogVisible(true);
   };
