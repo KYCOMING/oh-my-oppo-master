@@ -11,6 +11,7 @@ export interface CameraParam {
     whiteBalance: string; // 白平衡
     focus: string; // 对焦
     exposure: string; // 曝光补偿
+    filter: string; // 滤镜
   };
   author: {
     phone: string; // 提交者手机号

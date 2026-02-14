@@ -29,6 +29,7 @@ const initialData: CameraParam[] = [
       whiteBalance: 'Auto',
       focus: 'Auto',
       exposure: '+0.0',
+      filter: 'standard',
     },
     author: {
       phone: '13800000001',
@@ -59,6 +60,7 @@ const initialData: CameraParam[] = [
       whiteBalance: 'Auto',
       focus: 'Portrait',
       exposure: '+0.0',
+      filter: 'standard',
     },
     author: {
       phone: '13800000002',
@@ -89,6 +91,7 @@ const initialData: CameraParam[] = [
       whiteBalance: 'Auto',
       focus: 'Continuous',
       exposure: '+0.0',
+      filter: 'standard',
     },
     author: {
       phone: '13800000003',

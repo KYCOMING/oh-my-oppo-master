@@ -3,7 +3,7 @@ import { View, Text, ScrollView, StyleSheet, TextInput, Alert, KeyboardAvoidingV
 import { useRouter } from 'expo-router';
 import { useParamsStore } from '@/stores/paramsStore';
 import { submitParam } from '@/api/page-apis/submit-api';
-import { Header, CameraParamSlider, CameraParamPicker, SubmitButton, ImagePickerComponent } from '@/components/public-components';
+import { Header, CameraParamSlider, CameraParamPicker, FilterPicker, SubmitButton, ImagePickerComponent } from '@/components/public-components';
 import { copyImagesToDocuments } from '@/utils/image-storage';
 import {
   ISO_OPTIONS,
@@ -12,6 +12,7 @@ import {
   WHITE_BALANCE_OPTIONS,
   FOCUS_OPTIONS,
   EXPOSURE_OPTIONS,
+  FILTER_OPTIONS,
 } from '@/utils/camera-options';
 
 export default function SubmitPage() {
@@ -29,6 +30,7 @@ export default function SubmitPage() {
     whiteBalance: WHITE_BALANCE_OPTIONS[0].value,
     focus: FOCUS_OPTIONS[1].value,
     exposure: EXPOSURE_OPTIONS[30].value,
+    filter: FILTER_OPTIONS[0].value,
   });
 
   const handleSettingChange = (key: string, value: string) => {
@@ -183,6 +185,14 @@ export default function SubmitPage() {
             options={EXPOSURE_OPTIONS}
             onChange={(value) => handleSettingChange('exposure', value)}
             testID="exposure-slider"
+          />
+
+          <FilterPicker
+            label="滤镜"
+            value={cameraSettings.filter}
+            options={FILTER_OPTIONS}
+            onChange={(value) => handleSettingChange('filter', value)}
+            testID="filter-picker"
           />
 
           {/* Submit Button */}

@@ -64,6 +64,27 @@ export const FOCUS_OPTIONS = [
   { label: 'MF (手动)', value: 'MF' },
 ];
 
+export const FILTER_OPTIONS = [
+  { label: '标准', value: 'standard' },
+  { label: '霓虹', value: 'neon' },
+  { label: '冷调闪光', value: 'cold-flash' },
+  { label: '暖调闪光', value: 'warm-flash' },
+  { label: '清新', value: 'fresh' },
+  { label: '复古', value: 'vintage' },
+  { label: '通透', value: 'clear' },
+  { label: '明艳', value: 'vivid' },
+  { label: '童话', value: 'fairy' },
+  { label: '人文', value: 'documentary' },
+  { label: '自然', value: 'natural' },
+  { label: '美味', value: 'food' },
+  { label: '冷调', value: 'cold' },
+  { label: '暖调', value: 'warm' },
+  { label: '浓郁', value: 'rich' },
+  { label: '高级灰', value: '高级灰' },
+  { label: '黑白', value: 'bw' },
+  { label: '单色', value: 'mono' },
+];
+
 export const EXPOSURE_OPTIONS: { label: string; value: string }[] = [];
 for (let i = -30; i <= 30; i++) {
   const ev = i * 0.1;

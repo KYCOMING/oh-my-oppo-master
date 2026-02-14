@@ -3,6 +3,7 @@ import { Stack } from 'expo-router';
 import { StatusBar, View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { usePathname, useRouter } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
 import { useParamsStore } from '@/stores/paramsStore';
 import { initDatabase } from '@/dao/database';
 
@@ -73,16 +74,18 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
-      <View style={styles.root}>
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="index" />
-          <Stack.Screen name="submit" />
-          <Stack.Screen name="about" />
-          <Stack.Screen name="detail/[id]" />
-        </Stack>
-        <CustomTabBar />
-        <StatusBar barStyle="light-content" />
-      </View>
+      <GluestackUIProvider mode="dark">
+        <View style={styles.root}>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="index" />
+            <Stack.Screen name="submit" />
+            <Stack.Screen name="about" />
+            <Stack.Screen name="detail/[id]" />
+          </Stack>
+          <CustomTabBar />
+          <StatusBar barStyle="light-content" />
+        </View>
+      </GluestackUIProvider>
     </SafeAreaProvider>
   );
 }

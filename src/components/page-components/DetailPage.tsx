@@ -5,6 +5,7 @@ import { useParamsStore } from '@/stores/paramsStore';
 import { getDetail } from '@/api/page-apis/detail-api';
 import { Header } from '@/components/public-components';
 import { CameraParam } from '@/api/public-apis/types';
+import { FILTER_OPTIONS } from '@/utils/camera-options';
 
 const { width } = Dimensions.get('window');
 
@@ -103,6 +104,7 @@ export default function DetailPage({ id }: DetailPageProps) {
             <ParamRow label="白平衡" value={param.cameraSettings.whiteBalance} />
             <ParamRow label="对焦" value={param.cameraSettings.focus} />
             <ParamRow label="曝光补偿" value={param.cameraSettings.exposure} />
+            <ParamRow label="滤镜" value={FILTER_OPTIONS.find(opt => opt.value === param.cameraSettings.filter)?.label || param.cameraSettings.filter} />
           </View>
         </View>
       </ScrollView>
